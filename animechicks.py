@@ -4,30 +4,33 @@ import random, os, pickle
 app = Flask(__name__)
 
 def top_5():
-	chicks = []
-	for file in os.listdir('pickles'):
-		if not file.startswith('.'):
-			with open('pickles/'+file, 'rb') as dbfile:
-				print(file)
-				x = pickle.load(dbfile)
-				chicks.append(x)
+		chicks = []
+		for file in os.listdir('pickles'):
+			if not file.startswith('.'):
+				with open('pickles/'+file, 'rb') as dbfile:
+					x = pickle.load(dbfile)
+					chicks.append(x)
 
-	sortedchicks = sorted(chicks, key=lambda i: i['count'], reverse=True)
-	return sortedchicks[0], sortedchicks[1], sortedchicks[2], sortedchicks[3], sortedchicks[4]
+		sortedchicks = sorted(chicks, key=lambda i: i['count'], reverse=True)
+		return sortedchicks[0], sortedchicks[1], sortedchicks[2], sortedchicks[3], sortedchicks[4]
+
 
 @app.route('/vote/<direction>')
 def click(direction):
-	session['clicked'] += 1
-	girl = session['girl1'] if direction == 'left' else session['girl2']
+	try:
+		session['clicked'] += 1
+		girl = session['girl1'] if direction == 'left' else session['girl2']
 
-	with open('pickles/'+girl, 'rb') as dbfile:
-		chick = pickle.load(dbfile)
-		chick['count'] += 1
+		with open('pickles/'+girl, 'rb') as dbfile:
+			chick = pickle.load(dbfile)
+			chick['count'] += 1
 
-	with open('pickles/'+girl, 'wb') as dbfile:
-		pickle.dump(chick, dbfile)   
+		with open('pickles/'+girl, 'wb') as dbfile:
+			pickle.dump(chick, dbfile)   
+		return entry_page()
 
-	return entry_page()
+	except:
+		return entry_page()
 
 
 @app.route('/')
@@ -49,11 +52,9 @@ def entry_page():
 
 	with open('pickles/'+girl1, 'rb') as dbfile:
 		chick1 = pickle.load(dbfile)
-		print(chick1['count'])
 
 	with open('pickles/'+girl2, 'rb') as dbfile:
 		chick2 = pickle.load(dbfile)
-		print(chick2['count'])
 
 	top1, top2, top3, top4, top5 = top_5()
 
