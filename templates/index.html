@@ -5,11 +5,11 @@
 <h2 style="text-align:center;">{{ the_title }} </h2>
 <h4 style="text-align:center;"> Click on the better chick </h4>
 
-<a title = "{{ the_chick1['name'] }}" href="{{ url_for('click', girl=the_girl1) }}">
+<a title = "{{ the_chick1['name'] }}" href="{{ url_for('click', direction='left') }}">
 	<img src= "{{ the_chick1['image'] }}" alt="chick1">
 </a>
 
-<a title = "{{ the_chick2['name'] }}" href="{{ url_for('click', girl=the_girl2)}}">
+<a title = "{{ the_chick2['name'] }}" href="{{ url_for('click', direction='right')}}">
 <img src= "{{ the_chick2['image'] }}" alt="chick2">
 </a>
 
