@@ -15,9 +15,9 @@ def top_5():
 	sortedchicks = sorted(chicks, key=lambda i: i['count'], reverse=True)
 	return sortedchicks[0], sortedchicks[1], sortedchicks[2], sortedchicks[3], sortedchicks[4]
 
-
 @app.route('/vote/<direction>')
 def click(direction):
+	session['clicked'] += 1
 	girl = session['girl1'] if direction == 'left' else session['girl2']
 
 	with open('pickles/'+girl, 'rb') as dbfile:
@@ -32,6 +32,8 @@ def click(direction):
 
 @app.route('/')
 def entry_page():
+	if 'clicked' not in session:
+		session['clicked'] =0 
 	files = os.listdir('pickles')
 	while True:
 		girl1 = random.choice(files)
@@ -61,7 +63,8 @@ def entry_page():
 										 the_top2 = top2,
 										 the_top3 = top3,
 										 the_top4 = top4,
-										 the_top5 = top5)
+										 the_top5 = top5,
+										 the_click = session['clicked'])
 
 app.secret_key = 'hdwhi3682bjd2'
 
