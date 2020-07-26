@@ -3,6 +3,18 @@ import random, os, pickle
 
 app = Flask(__name__)
 
+def top_5():
+	chicks = []
+	for file in os.listdir('pickles'):
+		if not file.startswith('.'):
+			with open('pickles/'+file, 'rb') as dbfile:
+				print(file)
+				x = pickle.load(dbfile)
+				chicks.append(x)
+
+	sortedchicks = sorted(chicks, key=lambda i: i['count'], reverse=True)
+	return sortedchicks[0], sortedchicks[1], sortedchicks[2], sortedchicks[3], sortedchicks[4]
+
 
 @app.route('/vote/<direction>')
 def click(direction):
@@ -11,7 +23,7 @@ def click(direction):
 	with open('pickles/'+girl, 'rb') as dbfile:
 		chick = pickle.load(dbfile)
 		chick['count'] += 1
-		
+
 	with open('pickles/'+girl, 'wb') as dbfile:
 		pickle.dump(chick, dbfile)   
 
@@ -41,9 +53,15 @@ def entry_page():
 		chick2 = pickle.load(dbfile)
 		print(chick2['count'])
 
-	return render_template('index.html', the_title='Anime Chicks',
-										 the_chick1=chick1,
-										 the_chick2=chick2)
+	top1, top2, top3, top4, top5 = top_5()
+
+	return render_template('index.html', the_chick1=chick1,
+										 the_chick2=chick2,
+										 the_top1 = top1,
+										 the_top2 = top2,
+										 the_top3 = top3,
+										 the_top4 = top4,
+										 the_top5 = top5)
 
 app.secret_key = 'hdwhi3682bjd2'
 

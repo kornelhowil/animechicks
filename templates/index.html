@@ -2,15 +2,42 @@
 
 {% block body %} 
 
-<h2 style="text-align:center;">{{ the_title }} </h2>
+<h2 style="text-align:center;"> Anime Chicks </h2>
 <h4 style="text-align:center;"> Click on the better chick </h4>
 
-<a title = "{{ the_chick1['name'] }}" href="{{ url_for('click', direction='left') }}">
-	<img src= "{{ the_chick1['image'] }}" alt="chick1">
-</a>
+<div style="text-align:center;">
+	<a title = "{{ the_chick1['name'] }}" href="{{ url_for('click', direction='left') }}">
+		<img src= "{{ the_chick1['image'] }}" alt="chick1">
+	</a>
 
-<a title = "{{ the_chick2['name'] }}" href="{{ url_for('click', direction='right')}}">
-<img src= "{{ the_chick2['image'] }}" alt="chick2">
-</a>
+	<a title = "{{ the_chick2['name'] }}" href="{{ url_for('click', direction='right')}}">
+	<img src= "{{ the_chick2['image'] }}" alt="chick2">
+	</a>
+</div>
+
+<div style="text-align:center;">
+	<h3> Top 5 </h3>
+
+	<a title = "{{ the_top1['name'], the_top1['count'] }}" href="{{ the_top1['url'] }}">
+	<img height="300" src= "{{ the_top1['image'] }}" alt="chick1">
+	</a>
+
+	<a title = "{{ the_top2['name'], the_top2['count'] }}" href="{{ the_top2['url'] }}">
+	<img height="300" src= "{{ the_top2['image'] }}" alt="chick1">
+	</a>
+
+	<a title = "{{ the_top3['name'], the_top3['count'] }}" href="{{ the_top3['url'] }}">
+	<img height="300" src= "{{ the_top3['image'] }}" alt="chick1">
+	</a>
+
+	<a title = "{{ the_top4['name'], the_top4['count'] }}" href="{{ the_top4['url'] }}">
+	<img height="300" src= "{{ the_top4['image'] }}" alt="chick1">
+	</a>
+
+	<a title = "{{ the_top5['name'], the_top5['count'] }}" href="{{ the_top5['url'] }}">
+	<img height="300" src= "{{ the_top5['image'] }}" alt="chick1">
+	</a>
+</div>
+
 
 {% endblock %}
